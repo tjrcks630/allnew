@@ -1,0 +1,1 @@
+set nu di sm
