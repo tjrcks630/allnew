@@ -778,3 +778,40 @@ login
 login
 bashrc
 shutdown -h now
+c
+git add.
+git add .
+git fetch
+git init
+git add .
+git commit -m "myconfig"
+git push
+git push tjrcks360
+ls
+cd /work
+git fetch
+ls
+c
+git init
+git add .
+git commit -m "myconfig"
+git remote add origin https://github.com/impelfin/allnew
+git push
+git add .
+git commit -m "myconfig"
+git push
+cd 
+cd git/
+cd /work
+ls
+cd allnew
+ls
+git config --global user.name
+git config --global user.email
+git init
+git add .
+git commit -m "myconfig"
+git push
+shutdown -h now
+c
+shutdown -h now
