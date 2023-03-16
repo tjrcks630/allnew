@@ -1,3 +1,5 @@
-#.gitignore
 
-**/c/gcc/a.out
+
+c/**/a.out
+c/**/hello
+c/**/*.o
