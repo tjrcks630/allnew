@@ -3,8 +3,7 @@
 man=10
 woman=20
 
-if [ $man -lt $woman ]
-then
+if [ $man -lt $woman ];then
 	echo woman
 fi
 
