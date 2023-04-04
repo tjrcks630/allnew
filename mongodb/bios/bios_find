@@ -1,0 +1,2 @@
+use test
+idb.bios.find().pretty()
