@@ -1,0 +1,31 @@
+/* mystyle.css */
+body {
+    background-color: lightcyan;
+    color: mediumslateblue;
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
+h3 {
+
+    color: mediumslateblue;
+}
+
+input {
+
+    color: mediumslateblue;
+    font-size: 15px;
+}
+
+button {
+
+    color: mediumslateblue;
+    font-size: 15px;
+}
+
+a {
+
+    font-style: initial;
+    font-size: 20px;
+
+}
