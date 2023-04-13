@@ -55,8 +55,13 @@ app.post('/register', (req, res) => {
         res.redirect('register.html')
     } else {
         let result = connection.query("select * from user where userid=?",
+            //let은 값을 바꿀 수 있으니까 사용하고
+            //const는 값을 바꿀 수 없어서 사용하지 않음 2023.04.13
             [id]);
-        if (result[0].userid == id) {
+        if (result.length > 0) {
+            //만약 결과가 있다면 
+            //즉 0 = off , 1 = 결과 값이 있음
+
             res.writeHead(200);
             var template = `
             <!doctype html>
