@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<title>while 문</title>
+</head>
+
+<body>
+	<h3>Cal</h3>
+	<hr />
+	<script>
+
+
+		let dateinput = prompt("원하는 날짜를 입력");
+		//dateinput = parseInt(n); // 문자열을 숫자로 바꿈
+		//var startDay = new Date(dateinput).getDay();
+		//document.wirte(startDay);
+		const year = dateinput.substr(0, 4);
+		const month = dateinput.substr(4, 2);
+
+		//getDay() 는 해당 날짜의 요일만 출력하고
+		//0 부터 일 월 화 수 목 금 토 일 순으로 출력한다.
+		var startDay = new Date(year + "-" + month).getDay();
+		//console.log(year + "-" + month);
+
+		//getDate()로 지정하면 해당 입력한 날짜(ex:202302 는 28일)를 출력한다.
+		//해당 월에 총 날짜의 갯수를 출력
+		var endDay = new Date(year, month, 0).getDate();
+
+		//console.log(endDay);
+		//document.write("<h4>Sun Mon Thu Wed Thr Fri Sat</h4>");
+		//document.wirte("year : " + dateinput.substr(0, 3) + "month :" + dateinput.substr(4, 2));
+	</script>
+	<table id="calendar" border="3" align="center" width="400" height="300">
+		<thead>
+			<tr>
+				<th>Sun</th>
+				<th>Mon</th>
+				<th>Thu</th>
+				<th>Wed</th>
+				<th>Thr</th>
+				<th>Fri</th>
+				<th>Sat</th>
+			</tr>
+		</thead>
+		<script>
+			let i = 1;
+			for (i = 1; i <= startDay + endDay; i++) {
+				if (i % 7 == 1) document.write("<tr>");
+				//1주일(7일) 간격으로 \n을 해주는 명령
+				if (i <= startDay) document.write("<td>");
+				if (i > startDay) {
+					document.write("<td>");
+					document.write(i - startDay);
+					document.write("</td>");
+				}
+				if (i % 7 == 0) document.write("</tr>");
+			}
+		</script>
+	</table>
+</body>
+
+</html>

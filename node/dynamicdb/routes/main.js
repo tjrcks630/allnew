@@ -30,7 +30,8 @@ function template_nodata(res) {
         <link type="text/css" rel="stylesheet" href="mystyle.css" />
     </head>
     <body>
-        <h3>데이터가 존재하지 않습니다.</h3>
+        <script>alter('데이터가 없습니다')<script>
+
     </body>
     </html>
     `;
@@ -73,6 +74,8 @@ function template_result(result, res) {
     res.end(template);
 }
 
+
+
 app.get('/hello', (req, res) => {
     res.send('Hello World~!!')
 })
@@ -83,27 +86,33 @@ app.post('/login', (req, res) => {
     const result = connection.query("select * from user where userid=? and passwd=?", [id, pw]);
     // console.log(result);
     if (result.length == 0) {
+        //Query 결과가 없을 때
         res.redirect('error.html')
     }
+    //admin이 로그인 한 경우
     if (id == 'admin' || id == 'root') {
         console.log(id + " => Administrator Logined")
         res.redirect('member.html')
+        //일반유저가 로그인 한 경우
     } else {
         console.log(id + " => User Logined")
         res.redirect('user.html')
     }
 })
 
-// register
+// 회원가입 기능 register
 app.post('/register', (req, res) => {
     const { id, pw } = req.body;
     if (id == "") {
         res.redirect('register.html')
-        //아이디가 없다면? register로 redirect를 진ㅇ행
+        //아이디가 없다면? register로 redirect를 진행
     } else {
         let result = connection.query("select * from user where userid=?", [id]);
+        //이미 사용자가 있는 경우
         if (result.length > 0) {
             res.writeHead(200);
+            //200은 request 성공했다는 메세지
+            //404 같은 메세지들임 (상태를 알려주는 것인거 같다.)
             var template = `
         <!doctype html>
         <html>
@@ -157,44 +166,73 @@ app.post('/select', (req, res) => {
 })
 
 // SelectQuery 자신의 Data 추출 (request O, query X)
-app.get('/selectQuery', (req, res) => {
-    const id = req.query.id;
-    if (id == "") {
-        res.send('User-id를 입력하세요.')
+app.get("/selectQuery", (req, res) => {
+    const userid = req.query.userid;
+    const result = connection.query("SELECT * FROM user where userid=?", [
+        userid,
+    ]);
+    //console.log(result);
+    // res.send(result);
+    if (result.length == 0) {
+        res.write("<script>alert('데이터를 입력하세요.')</script>");
     } else {
-        const result = connection.query("select * from user where userid=?", [id]);
-        console.log(result);
-        // res.send(result);
-        if (result.length == 0) {
-            template_nodata(res)
-        } else {
-            template_result(result, res);
+        res.writeHead(200);
+        var template = `
+       <!doctype html>
+       <html>
+       <head>
+           <title>Result</title>
+           <link href="mystyle.css" type="text/css" rel="stylesheet">
+           <meta charset="utf-8">
+       </head>
+       <body>
+       <table border="1" style="margin:auto; text-align:center;">
+       <thead>
+           <tr><th>User ID</th><th>Password</th></tr>
+       </thead>
+       <tbody>
+       `;
+        for (var i = 0; i < result.length; i++) {
+            template += `
+       <tr>
+           <td>${result[i]["userid"]}</td>
+           <td>${result[i]["passwd"]}</td>
+       </tr>
+       `;
         }
+        template += `
+       </tbody>
+       </table>
+       </body>
+       </html>
+   `;
+        res.end(template);
     }
-})
+});
 
-// SelectQuery 자신의 Data 추출 (request O, query O)
-app.post('/selectQuery', (req, res) => {
-    const id = req.body.id;
-    if (id == "") {
-        res.send('User-id를 입력하세요.')
-    } else {
-        const result = connection.query("select * from user where userid=?", [id]);
-        console.log(result);
-        // res.send(result);
-        if (result.length == 0) {
-            template_nodata(res)
-        } else {
-            template_result(result, res);
-        }
-    }
-})
+// // SelectQuery 자신의 Data 추출 (request O, query O)
+// app.get('/selectQuery', (req, res) => {
+//     const id = req.body.id;
+//     if (id == "") {
+//         //res.send('User-id를 입력하세요.')
+//         res.write("<script>alert('User-id)를 입력하세요.')</script>");
+//     } else {
+//         const result = connection.query("select * from user where userid=?", [id]);
+//         console.log(result);
+//         // res.send(result);
+//         if (result.length == 0) {
+//             template_nodata(res)
+//         } else {
+//             template_result(result, res);
+//         }
+//     }
+// })
 
 // insert를 이용한 회원가입 (request O, query O)
 app.post('/insert', (req, res) => {
     const { id, pw } = req.body;
     if (id == "" || pw == "") {
-        res.send('User-id와 Password를 입력하세요.')
+        res.write("<script>alert('User-id 와 PW를 입력하세요.')</script>");
     } else {
         let result = connection.query("select * from user where userid=?", [id]);
         if (result.length > 0) {
@@ -227,7 +265,7 @@ app.post('/insert', (req, res) => {
 app.post('/update', (req, res) => {
     const { id, pw } = req.body;
     if (id == "" || pw == "") {
-        res.send('User-id와 Password를 입력하세요.')
+        res.write("<script>alert('User-id 와 PW를 입력하세요.')</script>");
         //id 와 pw 둘 다 입력된 값이 없다면 
         //해당 문구를 출력
     } else {
@@ -249,7 +287,7 @@ app.post('/update', (req, res) => {
 app.post('/delete', (req, res) => {
     const id = req.body.id;
     if (id == "") {
-        res.send('User-id를 입력하세요.')
+        res.write("<script>alert('User-id 와 PW를 입력하세요.')</script>");
     } else {
         const result = connection.query("select * from user where userid=?", [id]);
         console.log(result);
