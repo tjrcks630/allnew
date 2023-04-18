@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>모바일Bank 잔액</title>
+    <script>
+        //Class
+        function Bank(name, code, money) {
+            this.name = name;
+            this.code = code;
+            this.money = money;
+
+
+            this.leftmoney = money;
+
+            this.info = function () {
+                document.write(`
+            성함 : ${this.name}<br>
+            계좌번호 : ${this.code}<br>
+            잔액 : ${this.money}<br>
+            `);
+            };
+
+            //Method
+            this.nowmoney = function (money) {
+                this.leftmoney = money;
+
+                if (this.leftmoney >= 1)
+                    document.write(
+                        `고객님의 현재 잔액은 ${this.money}원 입니다. <br><hr />`
+                    );
+                else
+                    document.write(
+                        `잔액이 없습니다. <br><hr />`
+                    );
+            };//End of Method
+
+            // this.refueling = function (amount) {
+            //     this.leftoverFuel += amount;
+            //     document.write(
+            //         `${amount}L 주유하여 잔여 연료량은 ${this.leftoverFuel}입니다. <br><hr />`
+            //     );
+            // };
+        }//End of class
+    </script>
+</head>
+
+<body>
+    <h3>잔액조회</h3>
+    <hr />
+    <script>
+        let dong = new Bank("홍길동", "123456789", 0);
+        dong.info();
+        dong.nowmoney(0);
+
+        let chan = new Bank("김석찬", "987654321", 2000);
+        chan.info();
+        chan.nowmoney(2000);
+
+        let sun = new Bank("이순신", "789123456", 8000);
+        sun.info();
+        sun.nowmoney(8000);
+
+
+
+        // let bmw = new Car("BMW", "Sedan", 500, 2500, 2000);
+        // bmw.info();
+        // bmw.drive("Seoul", "Daejeon", 300);
+        // bmw.refueling(200);
+        // bmw.drive("Daejeon", "Seoul", 300);
+    </script>
+</body>
+
+</html>
