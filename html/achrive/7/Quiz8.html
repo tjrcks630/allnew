@@ -6,42 +6,42 @@
     <title>리터럴 표기법으로 Book 객체 만들기</title>
     <script>
 
-        function Book(title, author, totalPage, category, price, leftover, rentalState, rentalUser, rentalDay)
-        //let book = {
-        {
-            this.title = title,
-                this.author = author,
-                this.totalPage = totalPage,
-                this.category = category,
-                this.price = price,
-                this.leftover = leftover,
-                this.rentalState = rentalState,
-                this.rentalUser = rentalUser,
-                this.rentalDay = rentalDay,
+        function Book(title, author, totalPage, category, price) {
+            //let book = {
 
 
-                // title: "스며드는 리눅스",
-                // author: "문준현",
-                // totalPage: 350,
-                // category: "IT",
-                // price: 30000,
-                // leftover: 350,
-                // rentalState: 1,
-                // rentalUser: "",
-                // rentalDay: 0,
+            this.title = title;
+            this.author = author;
+            this.totalPage = totalPage;
+            this.category = category;
+            this.price = price;
+            //Class에 포함 시킬 값
 
-                // 메소드 작성
-                this.reading = function (page) {
-                    this.leftover = page;
-                    return this.leftover;
-                },
-                this.rental = function (user, day) {
-                    this.rentalUser = user;
-                    this.rentalDay = day;
-                    this.rentalState = 0;
-                    return this.rentalState;
-                }
-        }
+
+            this.leftover = totalPage;
+            this.rentalState = 1;
+            this.rentalUser = "";
+            this.rentalDay = 0;
+
+
+
+
+
+
+            // Method 작성
+            this.reading = function (page) {
+                this.leftover = page;
+                return this.leftover;
+            };
+            this.rental = function (user, day) {
+                this.rentalUser = user;
+                this.rentalDay = day;
+                this.rentalState = 0;
+                return this.rentalState;
+            }; //end of Method
+
+
+        }//end of Class
     </script>
 </head>
 
@@ -49,7 +49,7 @@
     <h1>Quiz8</h1>
     <hr />
     <script>
-        let book = new Book("책 이름", "김석찬", 500, "카테고리", "30000", 0, 0, "", 0);
+        let book = new Book("혼자 공부하는 데이터분석 with 파이썬", "박혜선", "IT", 30000);
 
         document.write("Book : " + "<br>");
         document.write("제목 : " + book.title + "<br>");
@@ -70,7 +70,7 @@
         document.write(
             "현재 " +
             book.title +
-            "는 " +
+            "은 " +
             book.rentalUser +
             "님에게 " +
             book.rentalDay +
