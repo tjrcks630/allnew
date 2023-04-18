@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>Quiz7</title>
+	<script>
+		//사용자 객체 만들기
+		let book = {
+			// 프로퍼티 생성 및 초기화
+			title: "모던 자바스크립트로 배우는 리액트 입문", // 책 제목
+			author: "니나니모", // 작가이름
+			totalPage: 500, // 페이지 수
+			category: "IT", //책 카테고리
+			price: 35000, //가격
+			remainPage: 0, //내가 보고있는 남은 페이지
+			rentalUser: "", // 해당 rental 유저의 이름 Value를 null로 설정
+			rentalDay: 0, // rentalDay를 0으로 null 값으로 설정
+
+
+
+			// Method
+
+			//읽고있는 페이지 조회 Method
+			reading: function (page) {
+				this.remainPage = this.totalPage - page;
+				//return this.totalPage;
+				return this.remainPage;
+			},
+			//return으로 값 넣어줘야지 제대로 값이 출력된다.
+
+			//빌린 유저 조회 Method
+			rental: function (user, day) {
+				this.rentalUser = user;
+				this.rentalDay = day;
+				return this.rentalUser;
+				return this.rentalDay;
+			}
+			//return으로 값 넣어줘야지 제대로 값이 출력된다.
+		};
+	</script>
+</head>
+
+<body>
+	<h1>Quiz7</h1>
+	<hr>
+	<script>
+		//let nowpage = book.totalpage - page;
+
+
+		document.write(+book.author + "님<hr />");
+		document.write("책 제목은 " + book.title + "입니다.<hr />"); s
+		document.write("총 페이지는 " + book.totalpage + " 이고 남은 페이지는" + book.reading(50) + "입니다<br>");
+		document.write(book.category + " 관련 서적으로 <hr />");
+		document.write("가격은 " + book.price + "원 입니다.<hr />");
+		//document.write("현재 남은 페이지는 : " + book.reading(50) + "입니다.<hr />");
+
+		//book.reading(50); // 50페이지 읽음
+		//document.write("남은 페이지는  " + book.reading(50) + "입니다.<hr />");
+		//book.rental(); // 대여일
+		//document.write("회원님 대여 날짜는 " + book.rental() + "입니다.<hr />");
+
+		document.write(book.rental("석찬") + "님 대여 날짜는 " + book.rental(30) + "일 입니다.<hr />");
+
+	</script>
+</body>
+
+</html>

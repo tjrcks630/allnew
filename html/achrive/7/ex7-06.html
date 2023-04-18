@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>방문 시간에 따라 변하는 배경색</title>
-</head>
-<body>
-<h3>페이지 방문 초시간이  짝수이면 violet, 홀수이면 lightskyblue 배경</h3>
-<hr>
-<script>
-	let current = new Date(); // 현재 시간 값을 가진 Date 객체 생성
-	if(current.getSeconds() % 2 == 0)
-		document.body.style.backgroundColor = "violet";
-	else
-		document.body.style.backgroundColor = "lightskyblue";
 
-	document.write("현재 시간 : ");
-	document.write(current.getHours(), "시,");
-	document.write(current.getMinutes(), "분,");
-	document.write(current.getSeconds(), "초<br>");
-</script>
+<head>
+	<meta charset="UTF-8">
+	<title>방문 시간에 따라 변하는 배경색</title>
+</head>
+
+<body>
+	<h3>Data객체로 경과시간 알아내기</h3>
+	<hr>
+	<script>
+		const beforedate = new Date(2023, 3, 6, 09, 00, 00)
+		let nowdate = date.now()
+		document.write(<hr />);
+
+		document.wirte("현재시간 :");
+		document.wirte(nowdate.getHours(), "시");
+		document.wirte(nowdate.getMinutes(), "분");
+		document.wirte(nowdate.getSecond(), "초 <br>");
+
+	</script>
 </body>
+
 </html>
