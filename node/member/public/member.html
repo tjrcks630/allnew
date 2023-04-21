@@ -3,29 +3,76 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>너부리는내일나한테까만돌맹이를줄꺼야</title>
-    <link type="text/css" rel="stylesheet" href="mystyle.css">
+    <title>User Authentication</title>
+    <link href="mystyle.css" type="text/css" rel="stylesheet">
+    <script>
+        function getParameter(name) {
+            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                results = regex.exec(location.search);
+            return results === null
+                ? ""
+                : decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+
+        function sessionStore() {
+            let id = getParameter("id");
+            let now = new Date();
+            if (!window.sessionStorage) {  //브라우저에 저장 한도가 초과할 경우와 쿠키 비활성화 상태일 경우
+                alert("세션 스토리지를 지원하지 않습니다.");
+                return;
+            }
+            if (id == "") {
+                alert("잘못된 접근입니다.")
+                //잘못된 접근이라는 메세지와 확인버튼 
+                sessionStorage.removeItem("")
+                //sessionStorage에 있는 해당 null 값 제거
+                location.href = "index.html";
+                //.href 는 해당 주소로 이동시켜주는? 것인데 index.html로 현재위치 (location)을 이동시킨다고 보면 된다.
+            } else {
+                alert(`사용자 ${id} 가 로그인 하셨습니다.`);
+                sessionStorage.setItem(id, now)
+            }
+        }
+
+        function logout() {
+            if (confirm("로그아웃 하시겠습니까?")) {
+                let id = getParameter("id");
+                sessionStorage.removeItem(id);
+                location.href = "/index.html";
+            }
+        }
+
+    </script>
 </head>
 
 <body>
-    <h3>포로리한테는땅강아지를줄꺼야</h3>
-    <h2>그러니까</h2>
-    <hr>
-    <form action="/insert" target="targetURL" name="userForm" method="post">
-        <p>Userid : <input type="text" size="15" name="id" /></p>
-        <p>Password : <input type="password" size="15" name="pw" /></p>
-        <input type="button" value="get select" onclick='document.targetURL.location.href="/select"' />&nbsp;&nbsp;
-        <input type="button" value="get selectQuery" onclick='document.targetURL.location.href="/selectQuery?userid="
-      +document.userForm.id.value' />&nbsp;&nbsp;
 
-        <input type="submit" value="post insert" /> &nbsp;&nbsp;
-        <button type="submit" formaction="/update">post update</button>&nbsp;&nbsp;
-        <button type="submit" formaction="/delete">post delete</button> &nbsp;&nbsp;
-    </form>
-    <hr />
-    <h1>헛소리하지마 임마</h1>
-    <iframe name="targetURL" width="70%" height="500" style="border: none;"
-        src="https://media.tenor.com/scdt09EktqwAAAAC/bonobono-hey-you.gif"></iframe>
-</body>
+    <body onload="sessionStore()">
+        <nav id="menubar">
+            <ul>
+                <li><a href="main.html">Home</a></li>
+                <li><a href="aboutme.html">About me</a></li>
+                <li style="float: right "><a onclick="logout()">logout</a></li>
+            </ul>
+        </nav>
+        <h3>BONO</h3>
+        <hr />
+        <div class="box">
+            <form action="/insert" target="targetURL" name="userForm" method="post">
+                <p>Userid : <input type="text" size="15" name="id" /></p>
+                <p>Password : <input type="password" size="15" name="pw" /></p>
+                <input type="button" value="get select"
+                    onclick='document.targetURL.location.href="/select"' />&nbsp;&nbsp;
+                <input type="button" value="get selectQuery"
+                    onclick='document.targetURL.location.href="/selectQuery?id="+document.userForm.id.value' />&nbsp;&nbsp;
+                <input type="submit" value="post insert" />&nbsp;&nbsp;
+                <button type="submit" formaction="/update">post update</button>&nbsp;&nbsp;
+                <button type="submit" formaction="/delete">post delete</button>
+        </div>
+        </form>
+        <hr />
+        <iframe name="targetURL" ; width="70%" ; height="500" ; style="border: none" src="/hello" ;></iframe>
+    </body>
 
 </html>

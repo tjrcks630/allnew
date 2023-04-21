@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>User Home</title>
+    <script>
+        let id = "";
+        let now = "";
+        function getParameter(name) {
+            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                results = regex.exec(location.search);
+            return results === null
+                ? ""
+                : decodeURIComponent(results[1].replace(/\+/g, " "));
+
+
+
+        }
+
+        function login() {
+            id = getParameter("id");
+            now = new Date();
+
+            if (!window.sessionStorage) {
+                alert("세션 스토리지를 지원하지 않습니다.");
+                return;
+            }
+
+            // if (sessionStorage.getItem(id = admin || id = root)) {
+            //     window.alter("관리자로 로그인 되었습니다.");
+            //     location.href = "login.html";
+            // } else {
+            //     window.alter("잘못된 접근 입니다 다시 로그인하세요.");
+            //     res.redirect('login.html?id=' + id);
+            //     return;
+
+            // }
+
+            sessionStorage.setItem(id, now);
+            let username_v = document.getElementById("username");
+            username_v.innerHTML = `사용자 ${id} 세션 스토리지 생성`;
+
+
+        }
+
+        window.addEventListener("beforeunload", (event) => {
+            event.preventDefault();
+            event.returnValue = "";
+        });
+
+        function logout() {
+            sessionStorage.removeItem(id);
+        }
+    </script>
+</head>
+
+<body onload="login()" onunload="logout()">
+    <div>
+        <span>
+            <h2 id="username">User Home</h2>
+        </span>
+    </div>
+    <div style="text-align: right">
+        <span><a href="index.html">logout</a></span>
+    </div>
+    <hr />
+    <h2>User's main Page</h2>
+    <hr />
+</body>
