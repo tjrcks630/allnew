@@ -2,8 +2,8 @@
 <html>
 
 <head>
-    <meta charset="utf-8" />
-    <title>Login</title>
+    <meta charset="UTF-8" />
+    <title>User Home</title>
     <script>
         let id = "";
         let now = "";
@@ -54,51 +54,18 @@
             sessionStorage.removeItem(id);
         }
     </script>
-    <style>
-        #menubar {
-            background: rgb(18, 22, 241);
-        }
-
-        #menubar ul {
-            /* 여백과 패딩 모두 0 */
-            margin: 20px;
-            padding: 20px;
-            width: 100%;
-            /* 모든 아이템(<li>)을 한 줄에 품을 수 있는 폭 */
-        }
-
-        #menubar ul li {
-            display: inline-block;
-            /* 새 줄로 넘어가지 않게 */
-            list-style-type: none;
-            /* 마커 삭제 */
-            padding: 0px 15px;
-            /* top=bottom=0, left=right=15px */
-        }
-
-        #menubar ul li a {
-            color: white;
-            text-decoration: none;
-            /* 링크 보이지 않게 */
-        }
-
-        #menubar ul li a:hover {
-            color: rgb(57, 167, 246);
-            /* 마우스 올라 갈 때 색 */
-        }
-    </style>
 </head>
 
-<body>
-    <nav id="menubar">
-        <ul>
-            <li><a href="user.html">Home</a></li>
-            <li><a href="aboutme.html">Aboutme</a></li>
-            <li style="float : right" ;><a href="index.html">Logout</li>
-        </ul>
-    </nav>
+<body onload="login()" onunload="logout()">
+    <div>
+        <span>
+            <h2 id="username">User Home</h2>
+        </span>
+    </div>
+    <div style="text-align: right">
+        <span><a href="index.html">logout</a></span>
+    </div>
     <hr />
-    <iframe name="targetURL" width="70%" height="500" style="border : none" src="main.html">
+    <h2>User's main Page</h2>
+    <hr />
 </body>
-
-</html>

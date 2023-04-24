@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Prime Number 워커 테스크</title>
+</head>
+
+<body>
+    <h3>Prime Number 워커 테스크</h3>
+    <hr>
+    <input type="text" size="3" name="id">is Prime Number?? </input>
+    <button type="button" id="prime" onclick="send()">send</button>
+    <hr>
+    <script>
+        let worker = new Worker("prime.js");//워크 테스크 생성
+
+        //send function 
+        function send() {
+
+            worker.postMessage("send");
+        }
+        // addWorker 워커 객체 생성 및 워커 태스크 시작
+
+
+
+        worker.onmessage = function (e) {
+            if (e.data) {
+                document.getElementById("Not Prime Number");
+            } else {
+                document.getElementById("Prime Number");
+            }
+        }
+
+    </script>
+</body>
+
+</html>

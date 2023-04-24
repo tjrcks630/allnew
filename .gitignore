@@ -1,8 +1,7 @@
 # .gitignore
-
 .ftpconfig
 
-#enviroment.files
+# environment files
 .env
 
 ## c programing
@@ -11,26 +10,28 @@ c/**/hello
 c/**/*.o
 c/**/test
 
-##java
+## java
 
 java/*.class
 
-##scala
+## scala
 scala/**/project
-scala/**/target
+scala/**/targetls
 
-#maven
+## maven
 maven/target
 
-##node js
+##nodejs
 node/**/node_modules
 node/**/package-lock.json
+node/config/pool.js
 
-##python
+
+## python
 python/**/.venv
 python/**/__pycache__/
 
-##mongodb
+## mongodb
 mongodb/*.json
 mongodb/**/*.json
 mongodb/**/*.mp4
@@ -38,7 +39,7 @@ mongodb/backup
 
 ## oracle
 oracle/node/dbConfig.js
-oracle/node_modules
+oracle/node/node_modules
 oracle/node/package-lock.json
 
-##html
+## html
