@@ -1,83 +1,115 @@
-const express = require("express")
-const app = express.Router()
+const express = require("express");
+const app = express.Router();
+const mysql = require('sync-mysql');
 const mongoose = require("mongoose")
 const async = require("async")
 
 // define schema
-// define schema
-var userSchema = mongoose.Schema({
-    userid: String,
-    name: String,
-    city: String,
-    sex: String,
-    age: Number
+var restbl = mongoose.Schema({
+    resNumber: Number,
+    userId: String,
+    shopName: String,
+    resDate: String,
+    shopService: String,
+    shopArea: String
 }, {
     versionKey: false
 })
 
+// MySQL 연결 정보
+let connection = new mysql({
+    host: 'ubuntu',
+    user: 'mysql',
+    password: '1234',
+    database: 'testdb'
+});
+
+
 // create model with mongodb collection and schema
-var User = mongoose.model('users', userSchema);
+var Restbl = mongoose.model('reschecktbl', restbl);
 
-app.get("/Hello", function (req, res) {
-    res.send("Hello World~!!")
-})
+//Hello
+// app.get("/Hello", function (req, res) {
+//     res.send("Hello World~!!")
+// })
+//list
 
-// list
 app.get('/list', function (req, res, next) {
-    User.find({}, function (err, docs) {
+    Restbl.find({}, function (err, docs) {
         if (err) console.log('err')
         res.send(docs)
     })
 })
 
-// get
+//get
 app.get('/get', function (req, res, next) {
     var userid = req.query.input
-    User.findOne({ 'userid': userid }, function (err, doc) {
-        if (err) console.log(err)
-        res.send(doc)
+    Restbl.findOne({ 'userid': userid }, function (err, docs) {
+        if (err) console.log('err')
+        res.send(docs)
     })
 })
 
 // insert
 app.post('/insert', function (req, res, next) {
-    var userid = req.body.userid;
-    var name = req.body.name;
-    var city = req.body.city;
-    var sex = req.body.sex;
-    var age = req.body.age;
-    var user = new User({ 'userid': userid, 'name': name, 'city': city, 'sex': sex, 'age': age })
+    var resNumber = req.body.resNumber;
+    var userId = req.body.userId;
+    var shopName = req.body.shopName;
+    var resDate = req.body.resDate;
+    var shopService = req.body.shopService;
+    var shopArea = req.body.shopArea;
 
-    User.save(function (err, silence) {
-        if (err) {
-            console.log('err')
-            res.status(500).send('insert error')
-            return;
-        }
-        res.status(200).send("Inserted")
-    })
-})
+    // MySQL 쿼리
+    var query = `INSERT INTO restbl (resNumber, userId, shopName, resDate, shopService, shopArea) 
+               VALUES (${resNumber}, '${userId}', '${shopName}', '${resDate}', '${shopService}', '${shopArea}')`;
 
-// update
-app.post('/update', function (req, res, next) {
-    var userid = req.body.userid;
-    var name = req.body.name;
-    var city = req.body.city;
-    var sex = req.body.sex;
-    var age = req.body.age;
-
-    User.findOne({ 'userid': userid }, function (err, user) {
+    // try {
+    //     // 쿼리 실행
+    //     const result = connection.query(query);
+    //     res.status(200).send("Inserted");
+    // } catch (err) {
+    //     console.log(err);
+    //     res.status(500).send('insert error');
+    //     return;
+    // }
+    restbl.save(function (err, silence) {
         if (err) {
             console.log('err')
             res.status(500).send('update error')
             return;
         }
-        user.name = name;
-        user.sex = sex;
-        user.city = city;
-        user.age = age;
+        let result = connection.query(query);
+        res.status(200).send("Updated")
+    })
+});
 
-        user.save(function (err, silence) {
+
+
+
+
+// update
+app.post('/update', function (req, res, next) {
+    var resNumber = req.body.resNumber;
+    var userId = req.body.userId;
+    var shopName = req.body.shopName;
+    var resDate = req.body.resDate;
+    var shopService = req.body.shopService;
+    var shopArea = req.body.shopArea;
+
+    Restbl.findOne({ 'resNumber': resNumber }, function (err, restbl) {
+        if (err) {
+            console.log('err')
+            res.status(500).send('update error')
+            return;
+        }
+        resNumber = req.body.resNumber;
+        userId = req.body.userId;
+        shopName = req.body.shopName;
+        resDate = req.body.resDate;
+        shopService = req.body.shopService;
+        shopArea = req.body.shopArea;
+
+        restbl.save(function (err, silence) {
             if (err) {
                 console.log('err')
                 res.status(500).send('update error')
@@ -90,9 +122,15 @@ app.post('/update', function (req, res, next) {
 
 // delete
 app.post('/delete', function (req, res, next) {
-    var userid = req.body.userid;
-    var user = User.find({ 'userid': userid })
-    user.remove(function (err) {
+    var resNumber = req.body.resNumber;
+    // var userId = req.body.userId;
+    // var shopName = req.body.shopName;
+    // var resDate = req.body.resDate;
+    // var shopService = req.body.shopService;
+    // var shopArea = req.body.shopArea;
+
+    var restbl = Restbl.find({ 'resNumber': resNumber })
+    restbl.deleteOne(function (err) {
         if (err) {
             console.log('err')
             res.status(500).send('delete error')
@@ -102,7 +140,14 @@ app.post('/delete', function (req, res, next) {
     })
 })
 
+
+
+
+
+
 module.exports = app;
+
+//비동기 함수
 
 async.series([query1, query2, query3, query4, query5, query6], function (err, result) {
     if (err) {

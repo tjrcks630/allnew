@@ -67,36 +67,32 @@ function template_result(result, res) {
     </html>
     `;
     res.end(template);
+
+    // User TBL login 로그인
+    app.post('/login', (req, res) => {
+        const { id, pw } = req.body;
+        const result = connection.query("select * from usertbl where userId=? and passwd=?", [id, pw]);
+        // console.log(result);
+        if (result.length == 0) {
+            res.redirect('error.html')
+        }
+        if (id == 'admin' || id == 'root') {
+            console.log(id + " => Administrator Logined")
+            res.redirect('member.html?id=' + id);
+        } else {
+            console.log(id + " => User Logined")
+            res.redirect('user.html?id=' + id)
+        }
+    })
 }
 
-app.get('/hello', (req, res) => {
-    res.send('Hello World~!!')
-})
-
-// login
-app.post('/login', (req, res) => {
-    const { id, pw } = req.body;
-    const result = connection.query("select * from user where userid=? and passwd=?", [id, pw]);
-    // console.log(result);
-    if (result.length == 0) {
-        res.redirect('error.html')
-    }
-    if (id == 'admin' || id == 'root') {
-        console.log(id + " => Administrator Logined")
-        res.redirect('member.html?id=' + id);
-    } else {
-        console.log(id + " => User Logined")
-        res.redirect('user.html?id=' + id)
-    }
-})
-
-// register
+// User TBL register 회원가입
 app.post('/register', (req, res) => {
-    const { id, pw } = req.body;
+    const { id, pw, name, addr, num } = req.body;
     if (id == "") {
         res.redirect('register.html')
     } else {
-        let result = connection.query("select * from user where userid=?", [id]);
+        let result = connection.query("select * from usertbl where userid=? and passwd=? and userName=? and userAddr=? and userNumber=?", [id, pw, name, addr, num]);
         if (result.length > 0) {
             res.writeHead(200);
             var template = `
@@ -117,7 +113,7 @@ app.post('/register', (req, res) => {
         `;
             res.end(template);
         } else {
-            result = connection.query("insert into user values (?, ?)", [id, pw]);
+            result = connection.query("insert into usertbl values (?, ?, ?, ?, ?)", [id, pw, name, addr, num]);
             console.log(result);
             res.redirect('/');
         }
@@ -126,7 +122,7 @@ app.post('/register', (req, res) => {
 
 // request O, query X
 app.get('/select', (req, res) => {
-    const result = connection.query('select * from user');
+    const result = connection.query('select * from usertbl');
     console.log(result);
     // res.send(result);
     if (result.length == 0) {
@@ -187,7 +183,7 @@ app.post('/selectQuery', (req, res) => {
     }
 })
 
-// request O, query O
+// restbl
 app.post('/insert', (req, res) => {
     const { id, pw } = req.body;
     if (id == "" || pw == "") {
@@ -221,20 +217,20 @@ app.post('/insert', (req, res) => {
     }
 })
 
-// request O, query O
+// UserTBL 회원정보 변경
 app.post('/update', (req, res) => {
     const { id, pw } = req.body;
     if (id == "" || pw == "") {
         //res.send('User-id와 Password를 입력하세요.')
-        res.write("<script>alert('데이터를 입력하셔야 합니다만?')</script>");
+        res.write("<script>alert('변경 할 ID를 입력하세요')</script>");
     } else {
-        const result = connection.query("select * from user where userid=?", [id]);
+        const result = connection.query("select * from usertbl where userid=?", [id]);
         console.log(result);
         // res.send(result);
         if (result.length == 0) {
             template_nodata(res) //데이터가 존재하지 않습니다.
         } else {
-            const result = connection.query("update user set passwd=? where userid=?", [pw, id]);
+            const result = connection.query("update usertbl set passwd=? where userid=?", [pw, id]);
             console.log(result);
             res.redirect('/selectQuery?id=' + id);
         }
@@ -242,24 +238,24 @@ app.post('/update', (req, res) => {
 })
 
 
-// request O, query O
+// UserTBL delete 회원 탈퇴 
 app.post('/delete', (req, res) => {
     const id = req.body.id;
     if (id == "") {
         //res.send('User-id를 입력하세요.')
-        res.write("<script>alert('데이터를 입력하셔야 합니다만?')</script>");
+        res.write("<script>alert('회원 ID를 입력해주세요')</script>");
     } else {
-        const result = connection.query("select * from user where userid=?", [id]);
+        const result = connection.query("select * from usertbl where userid=?", [id]);
         console.log(result);
         // res.send(result);
         if (result.length == 0) {
             //template_nodata(res)
-            res.write("<script>alert('그런 데이터는 없습니다만??')</script>");
+            res.write("<script>alert('없는 Data 입니다.')</script>");
         } else {
-            const result = connection.query("delete from user where userid=?", [id]);
+            const result = connection.query("delete from usertbl where userid=?", [id]);
             console.log(result);
             //res.redirect('/select');
-            res.write("<script>alert('삭제가 되었습니다만?')</script>");
+            res.write("<script>alert('삭제가 완료되었습니다.')</script>");
         }
     }
 })
