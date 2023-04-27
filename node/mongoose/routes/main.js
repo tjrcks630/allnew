@@ -30,6 +30,14 @@ app.get('/list', function (req, res, next) {
     })
 })
 
+//HTML로 예약 정보 보내는 API
+app.get('/list', function (req, res, next) {
+    User.find({}, function (err, docs) {
+        if (err) console.log('err')
+        res.send(docs)
+    })
+})
+
 // get
 app.get('/get', function (req, res, next) {
     var userid = req.query.input
@@ -175,3 +183,4 @@ function query6(callback) {
             callback(null)
         })
 }
+
