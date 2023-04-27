@@ -184,10 +184,10 @@ app.get('/selectDong', (req, res) => {
         // res.send(shoptbl);
         if (shoptbl.length == 0) {
             // template_nodata(res);
-            res.send({ "ok": false, "shoptbl": [shoptbl], "service": "SelectDong" });
+            res.send({ "ok": false, "shoptbl": shoptbl, "service": "SelectDong" });
         } else {
             // template_result2(result, res);
-            res.send({ "ok": true, "shopArea": [shoptbl], "service": "SelectDong" });
+            res.send({ "ok": true, "shopArea": shoptbl, "service": "SelectDong" });
         }
     }
 })
@@ -200,10 +200,10 @@ app.get('/select', (req, res) => {
     // res.send(shoptbl);
     if (shoptbl.length == 0) {
         // template_nodata(res);
-        res.send({ "ok": false, "shoptbl": [shoptbl], "service": "select" });
+        res.send({ "ok": false, "shoptbl": shoptbl, "service": "select" });
     } else {
         // template_result2(result, res);
-        res.send({ "ok": true, "shoptbl": [shoptbl], "service": "select" });
+        res.send({ "ok": true, "shoptbl": shoptbl, "service": "select" });
     }
 
 })
@@ -250,10 +250,10 @@ app.get('/select2', (req, res) => {
     // res.send(restbl;
     if (restbl.length == 0) {
         // template_nodata(res);
-        res.send({ "ok": true, "restbl": [restbl], "service": "ReservationSelect" });
+        res.send({ "ok": true, "restbl": restbl, "service": "ReservationSelect" });
     } else {
         // template_result3(result, res);
-        res.send({ "ok": true, "restbl": [restbl], "service": "ReservationSelect" });
+        res.send({ "ok": true, "restbl": restbl, "service": "ReservationSelect" });
     }
 })
 
@@ -310,7 +310,7 @@ app.post('/mongoinsert', function (req, res) {
 app.get('/mongolist', function (req, res, next) {
     Restbls.find({}, { _id: 0 }, function (err, mongolist) {
         if (err) console.log('err')
-        res.send({ "ok": true, "mongolist": [mongolist], "service": "mongolist" })
+        res.send({ "ok": true, "mongolist": mongolist, "service": "mongolist" })
 
     })
 })
