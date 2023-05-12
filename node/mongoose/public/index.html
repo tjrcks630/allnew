@@ -9,11 +9,12 @@
 <body>
     <h1>mongoose Example</h1>
     <hr />
-    <form method="post" " name=" mongoform" target="targetURL">
+    <form method="post" action="/insert" name="mongoform" target="targetURL">
         <input type="button" value="Users Collection" onclick='document.targetURL.location.href="/list"' />
         <p>
             userid <input type="text" size="10" name="userid" />
-            <input type="button" value="get" onclick='location.href="/get?input="+document.mongoform.userid.value' />
+            <input type="button" value="get"
+                onclick='document.targetURL.location.href="/get?input="+document.mongoform.userid.value' />
         </p>
         <p>name <input type="text" size="10" name="name" /></p>
         <p>city <input type="text" size="10" name="city" /></p>
