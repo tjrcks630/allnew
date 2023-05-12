@@ -30,7 +30,7 @@ class ChickenStore():
                 return BeautifulSoup(self.soup, 'html.parser')
             else:  # 페리카나 # Some characters could not be decoded, and were replaced with REPLACEMENT CHARACTER.
                 return BeautifulSoup(self.soup, 'html.parser')
-                # return BeautifulSoup(self.soup, 'html.parser', from_encoding="iso-8859-1")
+                # return BeautifulSoup(self.soup, 'html.parser', from_encoding="utf-8")
 
     def get_request_url(self):
         request = urllib.request.Request(self.url)
