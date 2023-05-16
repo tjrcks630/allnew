@@ -23,12 +23,15 @@ def getRequestUrl(url):
             return response.read().decode('utf-8')
     except Exception as e:
         print("[%s] Error for URL : %s" % (datetime.datetime.now(), url))
+        #날짜를 가져오는 datetime.datetime.now()
         return None
 
 def getHospitalData(pageNo, numOfRows):
+    #end point 를 미리보기에서 URL에서 긁어서 가져옴
     end_point = 'http://apis.data.go.kr/6260000/MedicInstitService/MedicalInstitInfo'
     
 
+    #미리보기에 있던 Parameters 들 긁어온다.
     parameters = ''
     parameters += "?resultType=json"
     parameters += "&serviceKey=" + get_secret("busan_h_apiKey")
