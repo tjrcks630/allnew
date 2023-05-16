@@ -1,9 +1,9 @@
+
 from itertools import count
 from p340_ChickenUtil import ChickenStore
 
 brandName = 'pelicana'
 base_url = 'https://www.pelicana.co.kr/store/stroe_search.html'
-
 
 def getData():
     savedData = []
@@ -16,7 +16,7 @@ def getData():
 
         mytable = soup.find('table', attrs={'class': 'table mt20'})
         mytbody = mytable.find('tbody')
-        print(mytbody)
+        #print(mytbody)
 
         shopExists = False
         for mytr in mytbody.findAll('tr'):
@@ -24,7 +24,7 @@ def getData():
             mylist = list(mytr.strings)
             print(mylist)
 
-            imsiphone = mytr.select_one('td:nth-of-type(3)').string
+            imsiphone = mytr.select_one('td : nth-of-type(3)').string
             if imsiphone != None:
                 phone = imsiphone.strip()
             else:
@@ -39,12 +39,12 @@ def getData():
                 gungu = imsi[1]
 
             mydata = [brandName, store, sido, gungu, address, phone]
+
             savedData.append(mydata)
 
-        if shopExists == False:
-            chknStore.save2Csv(savedData)
-            break
-
+            if shopExists == False:
+                chknStore.save2Csv(savedData)
+                break
 
 print(brandName + ' 매장 크롤링 시작')
 getData()
