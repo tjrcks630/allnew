@@ -43,3 +43,12 @@ oracle/node/node_modules
 oracle/node/package-lock.json
 
 ## html
+
+
+
+
+## python
+python/**/.venv
+python/**/__pycache__/
+python/**/.idea
+python/secret.json
