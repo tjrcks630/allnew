@@ -40,7 +40,7 @@ echo 'alias egrep='egrep —color=auto'' >> ~/.bashrc
 echo 'alias fgrep='fgrep —color=auto'' >> ~/.bashrc
 echo 'alias ls='ls -aCF —color=auto'' >> ~/.bashrc
 echo 'alias ll='ls -alF —color=auto'' >> ~/.bashrc
-
+echo 'alias export PS1='[\[\e[1;31m\]\u\[\e[m\]@\[\e[1;32m\]\h\[\e[m\] \[\e[1;36m\]\w\[\e[m\]]\$ '' >> ~/.bashrc
 
 echo "[TASK 6] Change DNS Server IP Address"
 echo -e "nameserver 8.8.8.8" > /etc/resolvconf/resolv.conf.d/head
