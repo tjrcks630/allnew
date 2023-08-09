@@ -31,6 +31,17 @@ echo 'alias cat=batcat' >> /etc/profile
 apt-get install exa -y >/dev/null 2>&1
 echo 'alias ls=exa' >> /etc/profile
 
+#Set alias
+echo 'alias c='clear'' >> ~/.bashrc
+echo 'alias h='history'' >> ~/.bashrc
+echo 'alias df='df -h'' >> ~/.bashrc
+echo 'alias grep='grep —color=auto'' >> ~/.bashrc
+echo 'alias egrep='egrep —color=auto'' >> ~/.bashrc
+echo 'alias fgrep='fgrep —color=auto'' >> ~/.bashrc
+echo 'alias ls='ls -aCF —color=auto'' >> ~/.bashrc
+echo 'alias ll='ls -alF —color=auto'' >> ~/.bashrc
+echo 'export PS1='[\[\e[1;31m\]\u\[\e[m\]@\[\e[1;32m\]\h\[\e[m\] \[\e[1;36m\]\w\[\e[m\]]\$ '' >> ~/.bashrc
+
 echo "[TASK 6] Change DNS Server IP Address"
 echo -e "nameserver 8.8.8.8" > /etc/resolvconf/resolv.conf.d/head
 resolvconf -u
