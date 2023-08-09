@@ -2,7 +2,7 @@
 
 echo ">>>> Initial Config Start <<<<"
 echo "[TASK 1] Setting Root Password"
-printf "1234\1234\n" | passwd >/dev/null 2>&1
+printf "1234\n1234\n" | passwd >/dev/null 2>&1
 
 echo "[TASK 2] Setting Sshd Config"
 sed -i "s/^PasswordAuthentication no/PasswordAuthentication yes/g" /etc/ssh/sshd_config
